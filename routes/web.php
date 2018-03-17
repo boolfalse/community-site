@@ -35,3 +35,7 @@ Route::get('/user/{id}/{username}', 'UserController@index')->name('user.index');
 });*/
 
 
+
+
+Route::get('chats', 'ChatController@chats')->name('chats');
+

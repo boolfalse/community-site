@@ -17,7 +17,7 @@ More features to come :)
 ## Installation
 Clone the repo
 
-    git clone https://github.com/moeddami/CommunitySite 
+    git clone https://bitbucket.org/boolfalse/moeddami-community-site
         
 Composer install
 
