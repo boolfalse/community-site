@@ -2,6 +2,10 @@
 
 @section('title') Chats @endsection
 
+@section('head')
+    <style rel="stylesheet" href="{{ asset('css/app.css') }}"></style>
+@endsection
+
 @section('content')
     <div class="card">
         <h5 class="card-header">All Chat Rooms</h5>
@@ -27,7 +31,9 @@
                 </div>
 
                 <div class="col-sm-9">
-                    <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <div class="row" id="app">
+                        <h2>Chat Room</h2>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,6 +41,7 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('js/app.js') }}"></script>
     {{--<script>--}}
         {{--$(document).ready(function () {});--}}
     {{--</script>--}}
