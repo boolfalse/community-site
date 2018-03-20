@@ -4,6 +4,12 @@
 
 @section('head')
     <style rel="stylesheet" href="{{ asset('css/app.css') }}"></style>
+    <style>
+        .list-group{
+            overflow-y: scroll;
+            height: 200px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -32,7 +38,13 @@
 
                 <div class="col-sm-9">
                     <div class="row" id="app">
-                        <h2>Chat Room</h2>
+                        <ul class="list-group offset-1 col-10">
+                            <message v-for="value in chat.messages" :key="value.index">
+                                @{{ value }}
+                            </message>
+                        </ul>
+
+                        <input v-model="message" @keyup.enter="send" type="text" class="form-control offset-1 col-10" placeholder="Message Text" />
                     </div>
                 </div>
             </div>
