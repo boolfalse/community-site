@@ -14,6 +14,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
+
 Vue.component('message', require('./components/message.vue'));
 
 const app = new Vue({

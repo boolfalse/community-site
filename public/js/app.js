@@ -13784,13 +13784,17 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(12);
-module.exports = __webpack_require__(43);
+module.exports = __webpack_require__(44);
 
 
 /***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -13807,7 +13811,10 @@ window.Vue = __webpack_require__(36);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('message', __webpack_require__(39));
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_chat_scroll___default.a);
+
+Vue.component('message', __webpack_require__(40));
 
 var app = new Vue({
     el: '#app',
@@ -47033,12 +47040,77 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
+(function (global, factory) {
+	 true ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global['vue-chat-scroll'] = factory());
+}(this, (function () { 'use strict';
+
+/**
+ * @name VueJS vChatScroll (vue-chat-scroll)
+ * @description Monitors an element and scrolls to the bottom if a new child is added
+ * @author Theodore Messinezis <theo@theomessin.com>
+ * @file v-chat-scroll  directive definition
+ */
+
+var scrollToBottom = function scrollToBottom(el) {
+    el.scrollTop = el.scrollHeight;
+};
+
+var vChatScroll = {
+    bind: function bind(el, binding) {
+        var timeout = void 0;
+        var scrolled = false;
+
+        el.addEventListener('scroll', function (e) {
+            if (timeout) window.clearTimeout(timeout);
+            timeout = window.setTimeout(function () {
+                scrolled = el.scrollTop + el.clientHeight + 1 < el.scrollHeight;
+            }, 200);
+        });
+
+        new MutationObserver(function (e) {
+            var config = binding.value || {};
+            var pause = config.always === false && scrolled;
+            if (pause || e[e.length - 1].addedNodes.length != 1) return;
+            scrollToBottom(el);
+        }).observe(el, { childList: true, subtree: true });
+    },
+    inserted: scrollToBottom
+};
+
+/**
+ * @name VueJS vChatScroll (vue-chat-scroll)
+ * @description Monitors an element and scrolls to the bottom if a new child is added
+ * @author Theodore Messinezis <theo@theomessin.com>
+ * @file vue-chat-scroll plugin definition
+ */
+
+var VueChatScroll = {
+    install: function install(Vue, options) {
+        Vue.directive('chat-scroll', vChatScroll);
+    }
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+    window.Vue.use(VueChatScroll);
+}
+
+return VueChatScroll;
+
+})));
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var disposed = false
-var normalizeComponent = __webpack_require__(40)
+var normalizeComponent = __webpack_require__(41)
 /* script */
-var __vue_script__ = __webpack_require__(41)
+var __vue_script__ = __webpack_require__(42)
 /* template */
-var __vue_template__ = __webpack_require__(42)
+var __vue_template__ = __webpack_require__(43)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -47077,7 +47149,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -47186,7 +47258,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47197,22 +47269,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['color'],
+    computed: {
+        className: function className() {
+            return 'list-group-item-' + this.color;
+        },
+        badgeClass: function badgeClass() {
+            return 'badge-' + this.color;
+        }
+    },
     mounted: function mounted() {
         console.log('Component mounted.');
     }
 });
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", { staticClass: "list-group-item" }, [_vm._t("default")], 2)
+  return _c(
+    "li",
+    { staticClass: "list-group-item", class: _vm.className },
+    [
+      _vm._t("default"),
+      _vm._v(" "),
+      _c(
+        "small",
+        { staticClass: "badge float-right", attrs: { color: _vm.badgeClass } },
+        [_vm._v("You")]
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -47225,7 +47320,7 @@ if (false) {
 }
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -38,7 +38,7 @@
 
                 <div class="col-sm-9">
                     <div class="row" id="app">
-                        <ul class="list-group offset-1 col-10">
+                        <ul class="list-group offset-1 col-10" v-chat-scroll>
                             <message v-for="value in chat.messages" :key="value.index">
                                 @{{ value }}
                             </message>
