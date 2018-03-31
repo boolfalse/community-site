@@ -68,6 +68,13 @@
                             </div>
                         </div>
                     </form>
+
+                    <div class="col-md-8 offset-md-4">
+                        <a href="{{ route('via_passport') }}" class="btn btn-warning">
+                            Login with Passport
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -36,6 +36,33 @@ Route::get('/user/{id}/{username}', 'UserController@index')->name('user.index');
 
 
 
-
 Route::get('chats', 'ChatController@chats')->name('chats');
 
+
+// Authorizing via CommunitySite
+Route::get('/redirect', function () {
+    $query = http_build_query([
+        'client_id' => '5',
+        'redirect_uri' => 'http://community-site.local:7777/callback',
+        'response_type' => 'code',
+        'scope' => '',
+    ]);
+
+    return redirect('http://passport.local:7777/oauth/authorize?'.$query);
+})->name('via_passport');
+
+Route::get('/callback', function (\Illuminate\Http\Request $request) {
+    $http = new GuzzleHttp\Client;
+
+    $response = $http->post('http://passport.local:7777/oauth/token', [
+        'form_params' => [
+            'grant_type' => 'authorization_code',
+            'client_id' => '5',
+            'client_secret' => '4e6kwY6AAO31AFOaQYzTosecp4rqqMBlkOQSizgC',
+            'redirect_uri' => 'http://community-site.local:7777/callback',
+            'code' => $request->code,
+        ],
+    ]);
+
+    return json_decode((string) $response->getBody(), true);
+});
